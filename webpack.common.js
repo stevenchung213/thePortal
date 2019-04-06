@@ -1,20 +1,15 @@
-const path = require('path'),
-  webpack = require('webpack'),
-  HtmlWebpackPlugin = require('html-webpack-plugin'),
-  WebpackPwaManifest = require('webpack-pwa-manifest'),
-  AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
     app: [
-      '@babel/polyfill',
+      'react-hot-loader/patch',
       './src/index.js'
     ]
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: __dirname + '/dist',
     publicPath: '/',
   },
   module: {
@@ -24,53 +19,49 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          plugins: [
-            "react-hot-loader/babel",
-            "@babel/plugin-proposal-class-properties",
-            "@babel/plugin-syntax-dynamic-import"
-          ],
           cacheDirectory: true,
-          presets: [
-            "@babel/preset-env",
-            "@babel/preset-react"
-          ],
         },
       },
       {
         test: /\.css$/,
-        use: [
-          {
-            loader: 'style-loader',
-            options: {
-              hmr: true
-            },
-          },
-          'css-loader'
-        ],
+        loader: ['style-loader', 'css-loader']
       },
       {
-        test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10 * 1024,
-            name: '[name].[ext]'
-          }
+        test: /\.scss|\.sass$/,
+        loader: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        query: {
+          limit: 10000,
+          name: 'images/[name].[ext]'
         }
-      }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 1000,
+          name: 'fonts/[name].[ext]'
+        }
+      },
+      {
+        test: /\.(webm|mp4)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'videos/[name].[ext]'
+        }
+      },
     ],
   },
   plugins: [
-    // new webpack.DllReferencePlugin({
-    //   context: __dirname,
-    //   manifest: require('./dist/library/library.json'),
-    // }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: require('html-webpack-template'),
       inject: false,
       mobile: true,
-      cache: true,
+      cache: false,
       minify: true,
       title: 'the.Portal',
       meta: [
@@ -93,29 +84,6 @@ module.exports = {
       appMountId: 'root',
       bodyHtmlSnippet: `<noscript>Please enable JavaScript...</noscript>`,
       scripts: []
-    }),
-    new WebpackPwaManifest({
-      inject: true,
-      filename: './assets/manifest.json',
-      name: 'the.Portal',
-      short_name: 'the.Portal',
-      description: 'Save your favorite images and access them anywhere',
-      display: 'standalone',
-      start_url: 'index.html',
-      theme_color: '#ffffff',
-      background_color: '#000000',
-      crossorigin: null,
-      icons: [
-        {
-          src: './src/assets/profile.png',
-          sizes: [512],
-          destination: '/assets'
-        }
-      ],
-    }),
-    // new AddAssetHtmlPlugin({
-    //   filepath: path.resolve(__dirname, './dist/library/*.dll.js'),
-    //   includeSourcemap: false // add this parameter
-    // })
+    })
   ],
 };

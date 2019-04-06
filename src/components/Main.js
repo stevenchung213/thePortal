@@ -1,5 +1,5 @@
 import React from 'react';
-import { hot } from 'react-hot-loader/root'
+import { hot } from 'react-hot-loader/root';
 import { Route, Switch } from 'react-router-dom';
 import Home from '../views/Home/Home';
 import Signup from '../views/Signup/Signup';

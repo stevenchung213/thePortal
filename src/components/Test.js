@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import { hot } from 'react-hot-loader/root';
 import {
   Route,
   Link,
+  Switch,
   Redirect,
   BrowserRouter as Router,
   withRouter
 } from 'react-router-dom';
-import Switch from "react-router-dom/es/Switch";
 
 
 const routes = [
@@ -140,7 +141,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div style={{ width: 1000, margin: '0 auto' }}>
+        <div style={{ width: 1000, margin: '0 auto', fontFamily: 'Roboto, serif' }}>
           <div style={{
             padding: '10px',
             width: '40%',
@@ -211,4 +212,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default hot(App);
