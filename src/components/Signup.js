@@ -16,7 +16,6 @@ const container = {
   };
 
 const Signup = () => {
-
   return (
     <div className='signup-container' style={container}>
       <Form>
@@ -34,11 +33,6 @@ const Signup = () => {
         </Form.Group>
         <Button variant="primary" type="submit" style={button}>
           Submit
-        </Button>
-        <br/>
-        <br/>
-        <Button variant="outline-primary" type="submit" style={button}>
-          Sign up with Google
         </Button>
       </Form>
     </div>

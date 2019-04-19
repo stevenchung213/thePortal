@@ -9,7 +9,7 @@ module.exports = merge(common, {
     }
   },
   mode: 'development',
-  devtool: 'eval',
+  devtool: 'cheap-eval-source-map',
   cache: true,
   performance: {
     hints: false
@@ -23,8 +23,8 @@ module.exports = merge(common, {
     nodeEnv: 'development',
     flagIncludedChunks: false,
     occurrenceOrder: false,
-    sideEffects: false,
-    usedExports: false,
+    usedExports: true,
+    sideEffects: true,
     concatenateModules: false,
     splitChunks: {
       hidePathInfo: false,
@@ -38,11 +38,17 @@ module.exports = merge(common, {
   },
   devServer: {
     hot: true,
-    port: 3000,
+    port: 8080,
+    proxy: {
+      "/api" : "http://localhost:3000"
+    },
     contentBase: __dirname + '/dist',
     historyApiFallback: true, // Allow refreshing of the page
   },
   plugins: [
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("development")
+    }),
     new webpack.NamedModulesPlugin(),
     new webpack.NamedChunksPlugin(),
     new webpack.HotModuleReplacementPlugin(), // Enable hot reloading

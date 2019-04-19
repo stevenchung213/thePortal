@@ -5,7 +5,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use(cors());
 app.use(helmet());
@@ -15,8 +15,8 @@ app.use(express.static(path.join(__dirname, './../dist')));
 
 
 
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname + './../dist/index.html'), (err) => {
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname + './../dist/index.html'), err => {
       if (err) {
         res.status(500).send(err);
       }

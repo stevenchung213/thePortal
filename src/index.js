@@ -3,16 +3,19 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
 import { AppContainer } from 'react-hot-loader';
-import Main from './components/Test';
+import Main from './components/Main';
 import styles from './styles.css';
 import store from './redux/store/index';
+import Auth from './auth0/Auth';
+
+const auth = new Auth();
 
 const render = Component => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
         <BrowserRouter>
-          <Component/>
+          <Component auth={auth}/>
         </BrowserRouter>
       </Provider>
     </AppContainer>,

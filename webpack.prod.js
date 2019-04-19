@@ -46,8 +46,8 @@ module.exports = merge(common, {
     nodeEnv: 'production',
     flagIncludedChunks: true,
     occurrenceOrder: true,
-    sideEffects: true,
     usedExports: true,
+    sideEffects: true,
     concatenateModules: true,
     splitChunks: {
       hidePathInfo: true,
@@ -74,7 +74,9 @@ module.exports = merge(common, {
     }
   },
   plugins: [
-    new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("production") }),
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("production")
+    }),
     new webpack.optimize.AggressiveMergingPlugin(),
     new MiniCssExtractPlugin({
       filename: "[name].css",
@@ -109,7 +111,7 @@ module.exports = merge(common, {
     }),
     new AddAssetHtmlPlugin({
       filepath: path.resolve(__dirname, './dist/*.js'),
-      includeSourcemap: false // add this parameter
+      includeSourcemap: false
     })
   ],
 });

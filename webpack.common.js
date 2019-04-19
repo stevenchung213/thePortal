@@ -1,4 +1,6 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+require('dotenv').config();
+const webpack = require("webpack"),
+  HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -10,7 +12,7 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: __dirname + '/dist',
-    publicPath: '/',
+    // publicPath: '/',
   },
   module: {
     rules: [
@@ -56,6 +58,12 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.AUTH0_DOMAIN': JSON.stringify(process.env.AUTH0_DOMAIN),
+      'process.env.AUTH0_CLIENT_ID': JSON.stringify(process.env.AUTH0_CLIENT_ID),
+      'process.env.AUTH0_CLIENT_SECRET': JSON.stringify(process.env.AUTH0_CLIENT_SECRET),
+      'process.env.AUTH0_CALLBACK_URL': JSON.stringify(process.env.AUTH0_CALLBACK_URL)
+    }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: require('html-webpack-template'),
