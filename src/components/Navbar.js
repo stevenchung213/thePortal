@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import NavLink from "react-bootstrap/NavLink";
 import { Link, Route, withRouter } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Giphy from "./Giphy";
 
 const Navigation = ({ auth }) => {
   const logout = () => {
@@ -17,8 +18,7 @@ const Navigation = ({ auth }) => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto mr-auto">
-            <NavLink as={Link} to='/features'>Features</NavLink>
-            <NavLink to="/pricing">Pricing</NavLink>
+            <NavLink as={Link} to='/giphy'>Giphy</NavLink>
             <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
               <NavDropdown.Item as={Link} to='/'>Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

@@ -13,11 +13,16 @@ const container = {
     width: '100%',
     borderRadius: '3rem',
     fontSize: '1.25rem'
+  },
+  title = {
+    fontSize: '500%'
   };
 
 const Signup = () => {
   return (
     <div className='signup-container' style={container}>
+      <h1>Sign up with</h1>
+      <h1 style={title}>the.Portal</h1>
       <Form>
         <Form.Group controlId="formGroupEmail">
           <Form.Control type="email" placeholder="Email" size='lg'/>

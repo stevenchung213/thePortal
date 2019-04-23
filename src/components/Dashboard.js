@@ -1,6 +1,6 @@
 import React from 'react';
-import { withRouter } from "react-router-dom";
-import Navigation from './Navbar';
+import { Route, withRouter } from "react-router-dom";
+import Giphy from "./Giphy";
 
 const dashboardContainer = {
   width: '100%',
@@ -8,12 +8,12 @@ const dashboardContainer = {
 };
 
 const Dashboard = ({ auth }) => {
-
+  
   const { name } = auth.getProfile();
   return (
     <div className="dashboard-container" id='top-nav' style={dashboardContainer}>
-      <Navigation auth={auth}/>
       <h1>Welcome {name}.</h1>
+      <Route path='/giphy' component={Giphy}/>
     </div>
   )
 };
