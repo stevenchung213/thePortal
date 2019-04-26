@@ -6,10 +6,6 @@ import { Link, withRouter } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 const Navigation = ({ auth }) => {
-  const logout = () => {
-    console.log('***DASH.logout()***')
-    auth.logout();
-  };
   return (
     <div>
       <Navbar collapseOnSelect expand="sm" bg="bg-transparent" fixed='top'>
@@ -28,7 +24,7 @@ const Navigation = ({ auth }) => {
           </Nav>
           <Nav>
             <NavLink to="/deets">More deets</NavLink>
-            <NavLink to="" onClick={logout}>Log out</NavLink>
+            <NavLink to="" onClick={() => auth.logout()}>Log out</NavLink>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

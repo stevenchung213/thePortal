@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/Button";
 
-const api = 'http://localhost:3000/api';
+const api = process.env.API || 'http://localhost:3000/api';
 
 class Giphy extends Component {
   
@@ -10,6 +10,7 @@ class Giphy extends Component {
     super(props);
     
     this.state = {
+      collection: [],
       giphys: []
     }
   }
@@ -66,6 +67,17 @@ class Giphy extends Component {
       .catch(err => console.log(err));
   };
   
+  componentDidMount() {
+    const { user } = this.props;
+    fetch(`${api}/giphy/${user}`)
+      .then(resp => resp.json())
+      .then(resp => {
+        console.log(resp, 'before setState')
+        this.setState({ collection: resp })
+      })
+      .catch(err => console.log(err));
+  }
+  
   render() {
     const container = {
         display: 'flex',
@@ -109,13 +121,13 @@ class Giphy extends Component {
               </div>
             )
           }
-        </div>
         <br/>
         {
           this.state.giphys.length > 0 &&
           <Button variant='success' style={button}
                   onClick={this.saveGiphy}>Save</Button>
         }
+        </div>
       </div>
     );
   }

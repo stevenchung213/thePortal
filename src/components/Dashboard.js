@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, withRouter } from "react-router-dom";
-import Giphy from "./Giphy";
+import Giphy from "./Giphy/Giphy";
 
 const dashboardContainer = {
   width: '100%',
@@ -13,7 +13,6 @@ const Dashboard = ({ auth }) => {
   return (
     <div className="dashboard-container" id='top-nav' style={dashboardContainer}>
       <h1>Welcome {name}.</h1>
-      <Route path='/giphy' component={Giphy}/>
     </div>
   )
 };

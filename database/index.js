@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 
 const mongoUri = `mongodb://localhost:27017/thePortal`;
 
-mongoose.connect(mongoUri, { useNewUrlParser: true })
+mongoose.connect(mongoUri, {
+  useNewUrlParser: true,
+  useFindAndModify: false
+})
   .then(() => {
     console.log(`mongoDB connected at ${mongoUri}`);
   })

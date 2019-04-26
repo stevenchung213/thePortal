@@ -7,7 +7,7 @@ import Login from "./Login";
 import NoMatch from './404';
 import Callback from '../auth0/Callback';
 import PrivateRoute from './PrivateRoute';
-import Giphy from "./Giphy";
+import Giphy from "./Giphy/Giphy";
 import Dashboard from "./Dashboard";
 import Navigation from "./Navbar";
 
@@ -60,6 +60,8 @@ class Main extends Component {
           )}/>
           <PrivateRoute path='/giphy' authenticated={authenticated}
                         user={user} component={Giphy}/>
+          <PrivateRoute path='/giphy/search' authenticated={authenticated}
+                        user={user} component={GiphySearch}/>
           <Route component={NoMatch}/>
         </Switch>
       </div>

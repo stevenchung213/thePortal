@@ -8,7 +8,16 @@ router.use(function (req, res, next) {
   next();
 });
 
+router.get('/:user', (req, res) => {
+  console.log('get request\n', req.params)
+  const { user } = req.params;
+  Users.find({ user: user }).exec()
+    .then(resp => res.send(resp[0].giphys))
+    .catch(err => console.log(err));
+});
+
 router.post('/', (req, res) => {
+  console.log('post query\n', req.body)
   const query = req.body.query.split(' ').join('+');
   request.get(`http://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_API_KEY}&tag=${query}`, (err, resp, body) => {
     if (err) {
@@ -19,7 +28,7 @@ router.post('/', (req, res) => {
 });
 
 router.post('/:user', (req, res) => {
-  // console.log(req.body)
+  console.log('post save\n', req.body)
   const { user, url } = req.body;
   Users.find({ user: user }).exec()
     .then(resp => {
