@@ -5,7 +5,7 @@ import Spinner from 'react-bootstrap/Spinner';
 const Callback = ({ auth, history }) => {
 
   auth.handleAuthentication().then(() => {
-    console.log('***CALLBACK.auth****\n', auth)
+    // console.log('***CALLBACK.auth****\n', auth)
     const { profile: { nickname } } = auth;
     history.push(`/`);
   });

@@ -2,9 +2,8 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from "react-bootstrap/Nav";
 import NavLink from "react-bootstrap/NavLink";
-import { Link, Route, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import Giphy from "./Giphy";
 
 const Navigation = ({ auth }) => {
   const logout = () => {
@@ -37,4 +36,4 @@ const Navigation = ({ auth }) => {
   );
 };
 
-export default withRouter(Navigation);
+export default Navigation;

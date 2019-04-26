@@ -39,6 +39,8 @@ class Main extends Component {
   render() {
     const authenticated = this.props.auth.isAuthenticated();
     const { auth, history } = this.props;
+    const user = authenticated ? auth.profile.nickname : '';
+    
     return (
       <div className='main-container' style={mainContainer}>
         {authenticated && <Navigation auth={auth}/>}
@@ -56,7 +58,8 @@ class Main extends Component {
           <Route path='/callback' render={() => (
             <Callback auth={auth} history={history}/>
           )}/>
-          <PrivateRoute path='/giphy' authenticated={authenticated} component={Giphy}/>
+          <PrivateRoute path='/giphy' authenticated={authenticated}
+                        user={user} component={Giphy}/>
           <Route component={NoMatch}/>
         </Switch>
       </div>
