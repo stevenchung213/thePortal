@@ -10,6 +10,7 @@ import PrivateRoute from './PrivateRoute';
 import Giphy from "./Giphy/Giphy";
 import Dashboard from "./Dashboard";
 import Navigation from "./Navbar";
+import GiphySearch from "./Giphy/GiphySearch";
 
 const mainContainer = {
   fontFamily: 'Roboto, serif',
@@ -58,7 +59,7 @@ class Main extends Component {
           <Route path='/callback' render={() => (
             <Callback auth={auth} history={history}/>
           )}/>
-          <PrivateRoute path='/giphy' authenticated={authenticated}
+          <PrivateRoute exact path='/giphy' authenticated={authenticated}
                         user={user} component={Giphy}/>
           <PrivateRoute path='/giphy/search' authenticated={authenticated}
                         user={user} component={GiphySearch}/>

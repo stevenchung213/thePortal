@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
-import { AppContainer } from 'react-hot-loader';
 import Main from './components/Main';
-import styles from './styles.css';
-import store from './redux/store/index';
+import makeStore from './redux/store/index';
 import Auth from './auth0/Auth';
+import styles from './styles.css';
 
 const auth = new Auth();
+const store = makeStore();
 
 const render = Component => {
   ReactDOM.render(
@@ -36,7 +37,7 @@ if (module.hot) {
     render(NextMain);
   });
   // clear console on reload
-  module.hot.addStatusHandler(status => {
-    if (status === 'prepare') console.clear()
-  })
+  // module.hot.addStatusHandler(status => {
+  //   if (status === 'prepare') console.clear()
+  // })
 }
