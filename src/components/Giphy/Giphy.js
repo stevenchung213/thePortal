@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
-import Button from "react-bootstrap/Button";
-import { giphysGetCollection } from "../../redux/actions";
+import { connect } from 'react-redux';
+import Button from 'react-bootstrap/Button';
+import CardColumns from 'react-bootstrap/CardColumns';
+import Card from "react-bootstrap/Card";
+import { giphysGetCollection } from "../../redux/actions/giphys";
 
 const api = process.env.GIPHY_API || 'http://localhost:3000/api';
 
@@ -21,49 +23,28 @@ const mapDispatchToProps = dispatch => {
 
 class Giphy extends Component {
   
-  // constructor(props) {
-  //   super(props);
-  //
-  //   this.state = {
-  //     giphys: [],
-  //     isLoading: false,
-  //     hasErrored: false
-  //   }
-  // }
-  
   componentDidMount() {
     const { user } = this.props;
     console.log('giphy component did mount')
     this.props.giphysGetCollection(`${api}/giphy/${user}`);
-    // const { user } = this.props;
-    // fetch(`${api}/giphy/${user}`)
-    //   .then(resp => resp.json())
-    //   .then(resp => {
-    //     this.setState({ giphys: resp });
-    //   })
-    //   .catch(err => console.log(err));
   }
   
   render() {
     const container = {
-        display: 'flex',
-        flexDirection: 'column',
-        height: 'fit-content',
-        width: 'fit-content',
-        margin: 'auto',
-        paddingTop: 56
+        display: 'flex', flexDirection: 'column', height: 'fit-content',
+        width: 'fit-content', margin: 'auto', paddingTop: 56
+      },
+      giphysContainer = {
+        display: 'flex', margin: 'auto', padding: '2vh 2vw'
       },
       button = {
-        width: '100%',
-        borderRadius: '3rem',
-        fontSize: '1.25rem'
+        width: '100%', borderRadius: '3rem', fontSize: '1.25rem'
       },
       giphysList = {
-        display: 'flex',
-        flexDirection: 'row',
-        height: 'fit-content',
-        width: 'fit-content',
-        margin: 'auto'
+        display: 'flex', flexDirection: 'row', height: 'fit-content', width: 'fit-content', margin: 'auto'
+      },
+      deleteButton = {
+        borderRadius: 20, margin: '1vh', padding: '1vh', float: 'right', backgroundColor: 'red'
       };
     
     return (
@@ -79,11 +60,18 @@ class Giphy extends Component {
                 Loading...
               </p>
               :
-              this.props.giphys.map((url, i) =>
-                <div key={i}>
-                  <img src={url} alt={`giphy-${i}`}/>
-                </div>
-              )
+              <div id={`giphys-container`} style={giphysContainer}>
+                <CardColumns>
+                  {
+                    this.props.giphys.map((url, i) =>
+                      <Card key={i}>
+                        <Card.Img src={url} alt={`my-giphy-${i}`}
+                                  variant='top'/>
+                        <Button variant='outline-danger' style={deleteButton}/>
+                      </Card>)
+                  }
+                </CardColumns>
+              </div>
         }
       </div>
     );

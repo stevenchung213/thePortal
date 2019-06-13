@@ -1,9 +1,10 @@
 import { createStore, applyMiddleware } from "redux";
-import thunk from 'redux-thunk';
+import thunkMiddleware from 'redux-thunk';
+import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "../reducers";
 
 const makeStore = initialState => {
-  const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
+  const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(thunkMiddleware)));
   
   if (module.hot) {
     module.hot.accept('../reducers/index.js', () => {

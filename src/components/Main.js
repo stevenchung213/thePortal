@@ -12,23 +12,7 @@ import Dashboard from "./Dashboard";
 import Navigation from "./Navbar";
 import GiphySearch from "./Giphy/GiphySearch";
 
-const mainContainer = {
-  fontFamily: 'Roboto, serif',
-  display: 'flex',
-  height: '100vh',
-  width: '100vw'
-};
-
 class Main extends Component {
-  
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      signup: false,
-      login: false
-    }
-  }
   
   handleButton = (e) => {
     const name = e.target.name;
@@ -38,10 +22,14 @@ class Main extends Component {
   };
   
   render() {
-    const authenticated = this.props.auth.isAuthenticated();
     const { auth, history } = this.props;
-    const user = authenticated ? auth.profile.nickname : '';
-    
+    const authenticated = auth.isAuthenticated();
+    const user = authenticated ? auth.profile.nickname : 'guest';
+  
+    const mainContainer = {
+      fontFamily: 'Roboto, serif', display: 'flex', height: '100vh', width: 'auto'
+    };
+  
     return (
       <div className='main-container' style={mainContainer}>
         {authenticated && <Navigation auth={auth}/>}

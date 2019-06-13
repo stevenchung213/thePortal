@@ -2,10 +2,10 @@ import {
   GIPHYS_HAS_ERRORED,
   GIPHYS_ARE_LOADING,
   GIPHYS_GET_SUCCESS,
-  GIPHY_HAS_ERRORED,
-  GIPHY_IS_LOADING,
-  GIPHY_SEARCH_SUCCESS
-} from "../constants/action-types";
+  GIPHYSEARCH_HAS_ERRORED,
+  GIPHYSEARCH_IS_LOADING,
+  GIPHYSEARCH_SEARCH_SUCCESS
+} from "../constants/giphys";
 
 // Giphy Actions
 
@@ -33,7 +33,7 @@ export const giphysGetSuccess = giphys => {
 export const giphysGetCollection = endpoint => {
   return dispatch => {
     dispatch(giphysAreLoading(true));
-    
+
     fetch(endpoint)
       .then(resp => {
         if (!resp.ok) {
@@ -56,21 +56,21 @@ export const giphysGetCollection = endpoint => {
 
 export const giphyHasErrored = bool => {
   return {
-    type: GIPHY_HAS_ERRORED,
+    type: GIPHYSEARCH_HAS_ERRORED,
     hasErrored: bool
   }
 };
 
 export const giphyIsLoading = bool => {
   return {
-    type: GIPHY_IS_LOADING,
+    type: GIPHYSEARCH_IS_LOADING,
     isLoading: bool
   }
 };
 
 export const giphySearchSuccess = randomGiphy => {
   return {
-    type: GIPHY_SEARCH_SUCCESS,
+    type: GIPHYSEARCH_SEARCH_SUCCESS,
     randomGiphy
   }
 };

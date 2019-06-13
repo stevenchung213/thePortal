@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { Field, reduxForm } from "redux-form";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { giphySearch } from '../../redux/actions/index';
+import { giphySearch } from '../../redux/actions/giphys';
 
 const api = process.env.GIPHY_API || 'http://localhost:3000/api';
 
@@ -19,9 +20,53 @@ const mapStateToProps = state => {
 //     giphySearch: (form, endpoint) => dispatch(giphySearch(form, endpoint))
 //   }
 // };
+const testAlert = values => {
+  const delay = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  };
+  delay(1000).then(()=>
+    window.alert(`you submitted: \n${JSON.stringify(values)}`));
+};
+
+const validate = values => {
+  const errors = {};
+  if (!values.giphySearchQuery) {
+    errors.giphySearchQuery = 'required'
+  }
+
+  return errors;
+};
+
+let SearchForm = ({ handleSubmit, submitting }) => {
+
+  const button = {
+    width: '100%',
+    borderRadius: '3rem',
+    fontSize: '1.25rem'
+  };
+  return (
+    <form onSubmit={testAlert}>
+      <div>
+        <Field name={`giphySearchQuery`} placeholder={`search giphy`}
+               component={Form.Control} type={`text`}
+        />
+      </div>
+      <br/>
+      <Button type='submit' variant='primary' style={button}
+              disabled={submitting}>
+        Search
+      </Button>
+    </form>
+  )
+};
+
+SearchForm = reduxForm({
+  form: 'giphySearchForm',
+  destroyOnUnmount: false
+})(SearchForm);
 
 class GiphySearch extends Component {
-  
+
   // constructor(props) {
   //   super(props);
   //
@@ -29,7 +74,7 @@ class GiphySearch extends Component {
   //     randomGiphy: ""
   //   }
   // }
-  
+
   // searchGiphy = (e) => {
   //   e.preventDefault();
   //   const formData = new FormData(e.target);
@@ -57,7 +102,10 @@ class GiphySearch extends Component {
   //     })
   //     .catch(err => console.log(err));
   // };
-  
+  test = values => {
+    console.log(values)
+  };
+
   saveGiphy = () => {
     const { user } = this.props;
     const url = this.props.randomGiphy.images.fixed_height.url;
@@ -83,7 +131,7 @@ class GiphySearch extends Component {
       })
       .catch(err => console.log(err));
   };
-  
+
   render() {
     const container = {
         display: 'flex',
@@ -105,18 +153,23 @@ class GiphySearch extends Component {
         width: 'fit-content',
         margin: 'auto'
       };
-    
+
     return (
       <div id='giphy-search-container' style={container}>
         <div id='giphy-input-container'>
-          <Form onSubmit={() => this.test(this,`${api}/giphy`)}>
-            <Form.Control name='query' type='text'
-                          size='lg' placeholder='search giphys'/>
-            <br/>
-            <Button type='submit' variant='primary' style={button}>
-              Search
-            </Button>
-          </Form>
+          {/*<Form onSubmit={() => this.test(this, `${api}/giphy`)}>*/}
+          {/*  <Form.Control name='query' type='text'*/}
+          {/*                size='lg' placeholder='search giphys'/>*/}
+          {/*  <br/>*/}
+          {/*  <Button type='submit' variant='primary' style={button}>*/}
+          {/*    Search*/}
+          {/*  </Button>*/}
+          {/*</Form>*/}
+
+
+          <SearchForm/>
+
+
         </div>
         <br/>
         <div id='giphys-container' style={displayGiphy}>

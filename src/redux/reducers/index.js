@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 import {
   giphysHasErrored,
   giphysAreLoading,
@@ -14,5 +15,6 @@ export default combineReducers({
   giphysGetSuccess,
   giphyHasErrored,
   giphyIsLoading,
-  giphySearchSuccess
+  giphySearchSuccess,
+  form: formReducer
 });

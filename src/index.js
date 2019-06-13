@@ -6,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import Main from './components/Main';
 import makeStore from './redux/store/index';
 import Auth from './auth0/Auth';
-import styles from './styles.css';
 
 const auth = new Auth();
 const store = makeStore();

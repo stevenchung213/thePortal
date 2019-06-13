@@ -86,7 +86,7 @@ module.exports = {
         }
       ],
       links: [
-        "https://fonts.googleapis.com/css?family=Roboto:300,400,500",
+        "https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap",
         "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       ],
       appMountId: 'root',

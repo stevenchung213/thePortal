@@ -3,7 +3,7 @@ const express = require('express'),
   request = require('request'),
   Users = require('../../database/index');
 
-router.use(function (req, res, next) {
+router.use((req, res, next) => {
   console.log(`incoming ${req.method} request to /api/giphy`);
   next();
 });

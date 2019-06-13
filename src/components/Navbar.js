@@ -8,7 +8,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 const Navigation = ({ auth }) => {
   return (
     <div>
-      <Navbar collapseOnSelect expand="sm" bg="bg-transparent" fixed='top'>
+      <Navbar collapseOnSelect expand="sm" bg="white" fixed='top'>
         <Navbar.Brand href="#top-nav">the.Portal</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
