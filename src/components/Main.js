@@ -10,6 +10,7 @@ import PrivateRoute from './PrivateRoute';
 import Giphy from "./Giphy/Giphy";
 import Dashboard from "./Dashboard";
 import Navigation from "./Navbar";
+import GiphySearch from "./Giphy/GiphySearch";
 
 const mainContainer = {
   fontFamily: 'Roboto, serif',
