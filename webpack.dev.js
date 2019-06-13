@@ -40,10 +40,10 @@ module.exports = merge(common, {
     hot: true,
     port: 8080,
     proxy: {
-      "/api": "http://localhost:3000"
+      "/api" : "http://localhost:3000"
     },
     contentBase: __dirname + '/dist',
-    historyApiFallback: true,
+    historyApiFallback: true, // Allow refreshing of the page
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -51,6 +51,6 @@ module.exports = merge(common, {
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.NamedChunksPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin(), // Enable hot reloading
   ]
 });

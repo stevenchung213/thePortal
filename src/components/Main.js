@@ -12,7 +12,23 @@ import Dashboard from "./Dashboard";
 import Navigation from "./Navbar";
 import GiphySearch from "./Giphy/GiphySearch";
 
+const mainContainer = {
+  fontFamily: 'Roboto, serif',
+  display: 'flex',
+  height: '100vh',
+  width: '100vw'
+};
+
 class Main extends Component {
+  
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      signup: false,
+      login: false
+    }
+  }
   
   handleButton = (e) => {
     const name = e.target.name;
@@ -22,14 +38,10 @@ class Main extends Component {
   };
   
   render() {
+    const authenticated = this.props.auth.isAuthenticated();
     const { auth, history } = this.props;
-    const authenticated = auth.isAuthenticated();
-    const user = authenticated ? auth.profile.nickname : 'guest';
-  
-    const mainContainer = {
-      fontFamily: 'Roboto, serif', display: 'flex', height: '100vh', width: 'auto'
-    };
-  
+    const user = authenticated ? auth.profile.nickname : '';
+    
     return (
       <div className='main-container' style={mainContainer}>
         {authenticated && <Navigation auth={auth}/>}
@@ -47,7 +59,7 @@ class Main extends Component {
           <Route path='/callback' render={() => (
             <Callback auth={auth} history={history}/>
           )}/>
-          <PrivateRoute exact path='/giphy' authenticated={authenticated}
+          <PrivateRoute path='/giphy' authenticated={authenticated}
                         user={user} component={Giphy}/>
           <PrivateRoute path='/giphy/search' authenticated={authenticated}
                         user={user} component={GiphySearch}/>

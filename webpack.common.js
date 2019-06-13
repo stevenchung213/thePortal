@@ -12,7 +12,7 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: __dirname + '/dist',
-    publicPath: '/',
+    // publicPath: '/',
   },
   module: {
     rules: [
@@ -86,7 +86,7 @@ module.exports = {
         }
       ],
       links: [
-        "https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap",
+        "https://fonts.googleapis.com/css?family=Roboto:300,400,500",
         "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       ],
       appMountId: 'root',

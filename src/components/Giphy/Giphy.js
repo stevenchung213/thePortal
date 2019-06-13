@@ -1,81 +1,136 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Button from 'react-bootstrap/Button';
-import CardColumns from 'react-bootstrap/CardColumns';
-import Card from "react-bootstrap/Card";
-import { giphysGetCollection } from "../../redux/actions/giphys";
+import Form from 'react-bootstrap/Form'
+import Button from "react-bootstrap/Button";
 
-const api = process.env.GIPHY_API || 'http://localhost:3000/api';
-
-const mapStateToProps = state => {
-  return {
-    giphys: state.giphysGetSuccess,
-    isLoading: state.giphysAreLoading,
-    hasErrored: state.giphysHasErrored
-  }
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    giphysGetCollection: endpoint => dispatch(giphysGetCollection(endpoint))
-  }
-};
+const api = process.env.API || 'http://localhost:3000/api';
 
 class Giphy extends Component {
   
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      collection: [],
+      giphys: []
+    }
+  }
+  
+  searchGiphy = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const query = {};
+    
+    for (let entry of formData.entries()) {
+      query[entry[0]] = entry[1];
+    }
+    
+    fetch(`${api}/giphy`,
+      {
+        method: 'POST',
+        body: JSON.stringify(query),
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .then(resp => resp.json())
+      .then(resp => {
+        const data = resp.data;
+        this.setState({
+          giphys: [data]
+        })
+      })
+  };
+  
+  saveGiphy = () => {
+    const { user } = this.props;
+    const url = this.state.giphys[0].images.fixed_height.url;
+    console.log(url, '\n', user)
+    const data = {
+      user: user,
+      url: url
+    };
+    fetch(`${api}/giphy/${user}`,
+      {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          "Content-type": "application/json"
+        }
+      })
+      .then(resp => resp.json())
+      .then(resp => {
+        if (resp === 'EXISTS') {
+          alert('already saved this giphy')
+        }
+        console.log(resp)
+      })
+      .catch(err => console.log(err));
+  };
+  
   componentDidMount() {
     const { user } = this.props;
-    console.log('giphy component did mount')
-    this.props.giphysGetCollection(`${api}/giphy/${user}`);
+    fetch(`${api}/giphy/${user}`)
+      .then(resp => resp.json())
+      .then(resp => {
+        console.log(resp, 'before setState')
+        this.setState({ collection: resp })
+      })
+      .catch(err => console.log(err));
   }
   
   render() {
     const container = {
-        display: 'flex', flexDirection: 'column', height: 'fit-content',
-        width: 'fit-content', margin: 'auto', paddingTop: 56
-      },
-      giphysContainer = {
-        display: 'flex', margin: 'auto', padding: '2vh 2vw'
+        display: 'flex',
+        flexDirection: 'column',
+        height: 'fit-content',
+        width: 'fit-content',
+        margin: 'auto',
+        paddingTop: 56
       },
       button = {
-        width: '100%', borderRadius: '3rem', fontSize: '1.25rem'
+        width: '100%',
+        borderRadius: '3rem',
+        fontSize: '1.25rem'
       },
-      giphysList = {
-        display: 'flex', flexDirection: 'row', height: 'fit-content', width: 'fit-content', margin: 'auto'
-      },
-      deleteButton = {
-        borderRadius: 20, margin: '1vh', padding: '1vh', float: 'right', backgroundColor: 'red'
+      giphys = {
+        display: 'flex',
+        flexDirection: 'row',
+        height: 'fit-content',
+        width: 'fit-content',
+        margin: 'auto'
       };
     
     return (
-      <div id='giphy-home-container' style={container}>
-        {
-          this.props.hasErrored ?
-            <p>
-              Sorry! There was an error while loading your giphys...
-            </p>
-            :
-            this.props.isLoading ?
-              <p>
-                Loading...
-              </p>
-              :
-              <div id={`giphys-container`} style={giphysContainer}>
-                <CardColumns>
-                  {
-                    this.props.giphys.map((url, i) =>
-                      <Card key={i}>
-                        <Card.Img src={url} alt={`my-giphy-${i}`}
-                                  variant='top'/>
-                        <Button variant='outline-danger' style={deleteButton}/>
-                      </Card>)
-                  }
-                </CardColumns>
+      <div id='giphy-container' style={container}>
+        <div id='giphy-input-container'>
+          <Form onSubmit={this.searchGiphy}>
+            <Form.Control name='query' type='text'
+                          size='lg' placeholder='search giphys'/>
+            <br/>
+            <Button type='submit' variant='primary' style={button}>
+              Submit
+            </Button>
+          </Form>
+        </div>
+        <br/>
+        <div id='giphys-container' style={giphys}>
+          {
+            this.state.giphys.map((giphy, i) =>
+              <div key={i}>
+                <img src={giphy.images.fixed_height.url} alt={giphy.slug}/>
               </div>
+            )
+          }
+        <br/>
+        {
+          this.state.giphys.length > 0 &&
+          <Button variant='success' style={button}
+                  onClick={this.saveGiphy}>Save</Button>
         }
+        </div>
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Giphy);
+export default Giphy;

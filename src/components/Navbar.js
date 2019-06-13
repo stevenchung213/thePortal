@@ -2,23 +2,25 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from "react-bootstrap/Nav";
 import NavLink from "react-bootstrap/NavLink";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 const Navigation = ({ auth }) => {
   return (
     <div>
-      <Navbar collapseOnSelect expand="sm" bg="white" fixed='top'>
+      <Navbar collapseOnSelect expand="sm" bg="bg-transparent" fixed='top'>
         <Navbar.Brand href="#top-nav">the.Portal</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto mr-auto">
-            <NavDropdown title="Giphy" id="collapsible-nav-dropdown">
-              <NavDropdown.Item as={Link} to='/giphy'>My Collection</NavDropdown.Item>
+            <NavLink as={Link} to='/giphy'>Giphy</NavLink>
+            <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
+              <NavDropdown.Item as={Link} to='/'>Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={Link} to='/giphy/search'>Search Giphy</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
             </NavDropdown>
-            <NavLink as={Link} to='/something'>Something</NavLink>
           </Nav>
           <Nav>
             <NavLink to="/deets">More deets</NavLink>
