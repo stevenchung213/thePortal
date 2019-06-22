@@ -2,7 +2,7 @@ import React from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const GiphySearch = ({giphys}) => {
+const GiphySearch = ({ giphys }) => {
   return (
     <div id='giphy-search-container'>
       <div id='giphy-input-container'>

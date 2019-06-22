@@ -118,15 +118,11 @@ class Giphy extends Component {
             this.state.giphys.map((giphy, i) =>
               <div key={i}>
                 <img src={giphy.images.fixed_height.url} alt={giphy.slug}/>
+                <Button variant='success' style={button}
+                        onClick={this.saveGiphy}>Save</Button>
               </div>
             )
           }
-        <br/>
-        {
-          this.state.giphys.length > 0 &&
-          <Button variant='success' style={button}
-                  onClick={this.saveGiphy}>Save</Button>
-        }
         </div>
       </div>
     );
